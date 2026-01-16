@@ -1,0 +1,125 @@
+{
+  "info": {
+    "name": "Plum Medical Bill Extractor",
+    "description": "API collection for testing medical bill amount extraction service",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        },
+        "description": "Check if the API is running"
+      },
+      "response": []
+    },
+    {
+      "name": "Test 1: Basic Text Extraction",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Total: INR 1200 | Paid: 1000 | Due: 200\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/process",
+          "host": ["{{base_url}}"],
+          "path": ["api", "process"]
+        },
+        "description": "Extract amounts from pipe-delimited text"
+      },
+      "response": []
+    },
+    
+    {
+      "name": "Test 2: Discount Percentage",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Total: 1200 | Discount: 10% | Paid: 1000 | Due: 200\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/process",
+          "host": ["{{base_url}}"],
+          "path": ["api", "process"]
+        },
+        "description": "Test percentage discount calculation (10% of 1200 = 120)"
+      },
+      "response": []
+    },
+    
+    {
+      "name": "Test 3: Guardrail Rejection",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Hello world, no numbers here\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/process",
+          "host": ["{{base_url}}"],
+          "path": ["api", "process"]
+        },
+        "description": "Test guardrail rejection (should return 422 error)"
+      },
+      "response": []
+    },
+    
+    {
+      "name": "Test 4: Debug Mode",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Total: INR 1200 | Paid: 1000 | Due: 200\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/process?debug=true",
+          "host": ["{{base_url}}"],
+          "path": ["api", "process"],
+          "query": [
+            {
+              "key": "debug",
+              "value": "true",
+              "description": "Show intermediate pipeline steps"
+            }
+          ]
+        },
+        "description": "Test with debug mode to see all intermediate steps"
+      },
+      "response": []
+    }
+]
+}

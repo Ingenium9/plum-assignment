@@ -1,0 +1,28 @@
+{
+  "name": "plum-assignment",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "nodemon -r dotenv/config src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@google/genai": "^1.36.0",
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "multer": "^2.0.2",
+    "openai": "^6.16.0",
+    "sharp": "^0.34.5",
+    "tesseract.js": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.9.36",
+    "@types/express": "^5.0.6",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^25.0.8",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
