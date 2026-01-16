@@ -42,7 +42,6 @@
       },
       "response": []
     },
-    
     {
       "name": "Test 2: Discount Percentage",
       "request": {
@@ -66,9 +65,31 @@
       },
       "response": []
     },
-    
     {
-      "name": "Test 3: Guardrail Rejection",
+      "name": "Test 3: Missing Value Inference",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"text\": \"Total: Rs 1200 Paid: 1000\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/process",
+          "host": ["{{base_url}}"],
+          "path": ["api", "process"]
+        },
+        "description": "Test reasoning layer - should infer due = 200 (1200 - 1000)"
+      },
+      "response": []
+    },
+    {
+      "name": "Test 4: Guardrail Rejection",
       "request": {
         "method": "POST",
         "header": [
@@ -90,9 +111,8 @@
       },
       "response": []
     },
-    
     {
-      "name": "Test 4: Debug Mode",
+      "name": "Test 5: Debug Mode",
       "request": {
         "method": "POST",
         "header": [
@@ -121,5 +141,12 @@
       },
       "response": []
     }
-]
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
 }
