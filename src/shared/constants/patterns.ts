@@ -1,19 +1,20 @@
+//
+// patterns.ts - Number extraction regex
+//
 // Matches numbers with:
-// - Currency prefixes (₹, Rs., INR)
+// - Currency prefixes (₹, Rs., INR) with optional space after
 // - Comma/space separators (1,200 or 1 200)
 // - Decimal points (1200.50)
-// - OCR noise (O→0, l/L/I→1, S→5, B→8)
 // - Trailing markers (/-, %)
-// - Handles both standalone and inline formats
 //
 // Examples matched:
-// ₹1,200
+// Rs 1200
 // Rs. 1200/-
 // INR 1200.50
 // 1200 (plain number)
-// T0tal: 12OO (with OCR noise)
-// 10% (percentages)
+// ₹1,200
+// 10%
 //
 
 export const EXTRACT_NUMBER_REGEX = 
-  /(?:₹|rs\.?|inr)?\s*(\d+(?:[,\s]\d+)*(?:\.\d{1,2})?)(?:\/-|%)?/gi;
+  /(?:₹|rs\.?\s*|inr\s*)?\s*(\d+(?:[,\s]\d+)*(?:\.\d{1,2})?)\s*(?:\/-|%)?/gi;

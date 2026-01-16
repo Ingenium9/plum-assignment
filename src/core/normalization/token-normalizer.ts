@@ -1,3 +1,7 @@
+//
+// token-normalizer.ts - OCR-Aware Digit Normalizer
+//
+
 export interface DigitNormalization {
   original: string;
   cleaned: string;
@@ -21,11 +25,10 @@ export const normalizeDigits = (token: string): DigitNormalization => {
     .replace(/[sS]/g, () => { hadOCRFix = true; return '5'; })
     .replace(/[bB]/g, () => { hadOCRFix = true; return '8'; });
 
-  // Normalize currency formatting
+  // Clean the number (formatting only, no currency removal needed)
+  // since number.ts now extracts pure digits
   let cleaned = ocrFixed
-    .replace(/[₹$£€]/g, '')    // remove currency symbols
     .replace(/,/g, '')          // remove commas (1,200 → 1200)
-    .replace(/\/-$/g, '')       // remove "/-" suffix
     .replace(/%/g, '')          // temporarily strip percent for parsing
     .replace(/\s+/g, '')        // trim whitespace
     .trim();

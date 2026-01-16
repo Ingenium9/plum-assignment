@@ -37,11 +37,20 @@ export class ClassifierService {
     confidence: number
   }> {
 
+    console.log("[Classifier] ===== Starting Classification =====");
+    console.log("[Classifier] Input text:", text);
+
     // Step 1: Rule Engine
     const ruleResults: LabeledAmount[] = ruleEngine.process(text);
+    console.log("[Classifier] Rule engine found:", ruleResults.length, "amounts");
+    console.log("[Classifier] Rule results:", JSON.stringify(ruleResults, null, 2));
+    
     const ruleConfidence = this.computeRuleConfidence(ruleResults);
+    console.log("[Classifier] Rule confidence:", ruleConfidence);
 
-    if (ruleConfidence >= 0.75) {
+    // Lower threshold to 0.65 to prefer rules
+    if (ruleConfidence >= 0.65) {
+      console.log("[Classifier] ✓ Using RULES (confidence >= 0.65)");
       return {
         source: "rule",
         amounts: ruleResults,
@@ -49,20 +58,33 @@ export class ClassifierService {
       };
     }
 
-    console.log("[Classifier] Rule weak → falling back to local LLM");
+    console.log("[Classifier] ✗ Rule confidence low, falling back to LLM");
 
-    // Step 2: LLM fallback (local Llama3)
+    // Step 2: LLM fallback
     const llmResults = await llm.classify(text);
+    console.log("[Classifier] LLM found:", llmResults.amounts?.length || 0, "amounts");
 
-    // If LLM gives nothing - return weak rule output instead of empty
+    // If LLM gives nothing OR rule found more - return rule output
     if (!llmResults.amounts || llmResults.amounts.length === 0) {
+      console.log("[Classifier] LLM returned nothing, using rule results");
       return {
         source: "rule",
         amounts: ruleResults,
-        confidence: ruleConfidence * 0.9 // penalize fallback but not 0
+        confidence: ruleConfidence * 0.9
       };
     }
 
+    // Prefer rules if they found more amounts
+    if (ruleResults.length >= llmResults.amounts.length) {
+      console.log("[Classifier] Rule found more/equal amounts, preferring rules");
+      return {
+        source: "rule",
+        amounts: ruleResults,
+        confidence: Math.max(ruleConfidence, 0.7)
+      };
+    }
+
+    console.log("[Classifier] Using LLM results");
     return {
       source: "llm",
       amounts: llmResults.amounts,

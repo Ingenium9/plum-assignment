@@ -1,4 +1,3 @@
-import { EXTRACT_NUMBER_REGEX } from "../../shared/constants/patterns";
 import { normalizeDigits, DigitNormalization } from "./token-normalizer";
 
 export interface NormalizedToken {
@@ -12,7 +11,10 @@ export interface NormalizedToken {
 
 export class NumberNormalizer {
   normalize(text: string) {
-    const matches = text.match(EXTRACT_NUMBER_REGEX) || [];
+    // Extract pure numbers only (no currency prefixes)
+    // This prevents "Rs 1200" from being treated as one token
+    const numberRegex = /\d+(?:[,\s]\d+)*(?:\.\d{1,2})?/g;
+    const matches = text.match(numberRegex) || [];
 
     const normalizedTokens: NormalizedToken[] = matches.map((raw) => {
       const norm: DigitNormalization = normalizeDigits(raw);
