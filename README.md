@@ -6,7 +6,7 @@ AI-powered extraction service for financial amounts from medical bills using a h
 
 **Production Deployment (24/7 Available)**
 ```
-https://plum-assignment.onrender.com
+https://plum-assignment-xg46.onrender.com
 ```
 
 **Status:** Always online  
@@ -166,21 +166,21 @@ curl -X POST http://localhost:3000/api/process \
 
 ### Basic Text Extraction
 ```bash
-curl -X POST https://plum-assignment.onrender.com/api/process \
+curl -X POST https://plum-assignment-xg46.onrender.com/api/process \
   -H "Content-Type: application/json" \
   -d '{"text": "Total: INR 1200 | Paid: 1000 | Due: 200"}'
 ```
 
 ### Discount Calculation
 ```bash
-curl -X POST https://plum-assignment.onrender.com/api/process \
+curl -X POST https://plum-assignment-xg46.onrender.com/api/process \
   -H "Content-Type: application/json" \
   -d '{"text": "Total: 1200 | Discount: 10% | Paid: 1000 | Due: 200"}'
 ```
 
 ### Guardrail Test
 ```bash
-curl -X POST https://plum-assignment.onrender.com/api/process \
+curl -X POST https://plum-assignment-xg46.onrender.com/api/process \
   -H "Content-Type: application/json" \
   -d '{"text": "Hello world, no numbers here"}'
 ```
@@ -197,7 +197,7 @@ Import `POSTMAN_COLLECTION.json` into Postman for pre-configured test cases.
 3. Select `POSTMAN_COLLECTION.json`
 4. Update `base_url` variable as needed:
    - Local: `http://localhost:3000`
-   - Cloud: `https://plum-assignment.onrender.com`
+   - Cloud: `https://plum-assignment-xg46.onrender.com`
 
 ## Technology Stack
 
