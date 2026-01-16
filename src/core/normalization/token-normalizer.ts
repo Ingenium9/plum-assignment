@@ -1,7 +1,3 @@
-//
-// token-normalizer.ts - OCR-Aware Digit Normalizer
-//
-
 export interface DigitNormalization {
   original: string;
   cleaned: string;

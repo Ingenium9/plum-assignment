@@ -1,6 +1,3 @@
-//
-// patterns.ts - Number extraction regex
-//
 // Matches numbers with:
 // - Currency prefixes (₹, Rs., INR) with optional space after
 // - Comma/space separators (1,200 or 1 200)
