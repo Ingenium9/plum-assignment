@@ -14,13 +14,13 @@
     "multer": "^2.0.2",
     "openai": "^6.16.0",
     "sharp": "^0.34.5",
-    "tesseract.js": "^7.0.0"
-  },
-  "devDependencies": {
-    "@types/axios": "^0.9.36",
+    "tesseract.js": "^7.0.0",
     "@types/express": "^5.0.6",
     "@types/multer": "^2.0.0",
     "@types/node": "^25.0.8",
+    "@types/axios": "^0.9.36"
+  },
+  "devDependencies": {
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"

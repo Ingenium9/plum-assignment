@@ -1,11 +1,10 @@
 import dotenv from 'dotenv';
 dotenv.config();
-//import "dotenv/config";
-import express from 'express';
+
+import express, { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import processRoutes from './routes/process.route';
-
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,7 +19,8 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // Simple health endpoint (important for Render)
-app.get('/health', (_req, res) => {
+// Explicitly typed res and _req to pass strict TS checks
+app.get('/health', (_req: Request, res: Response) => {
   res.status(200).json({ status: 'healthy' });
 });
 
@@ -28,7 +28,7 @@ app.get('/health', (_req, res) => {
 app.use('/api', processRoutes);
 
 // Landing page
-app.get('/', (_req, res) => {
+app.get('/', (_req: Request, res: Response) => {
   res.send('Plum AI Billing Extractor Service is Running');
 });
 
